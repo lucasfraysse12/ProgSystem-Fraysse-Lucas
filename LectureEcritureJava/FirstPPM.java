@@ -8,10 +8,14 @@ public class FirstPPM {
 
             writer.write("P3\n");
             // Écriture des dimensions
+			writer.write("3 2\n");
             // Écriture de la valeur maximal
+			writer.write("255\n");
             // Écriture des pixels
             // Première ligne : rouge, vert, bleu
+			writer.write("255 0 0 0 255 0 0 0 255");
             // Deuxième ligne : jaune, blanc, noir
+			writer.write("255 255 0 255 255 255 0 0 0");
 
             writer.close(); // Fermeture du fichier
 
