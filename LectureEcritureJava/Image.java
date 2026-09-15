@@ -1,5 +1,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.FileOutputStream;
 
 public class Image {
     private int width;
@@ -59,22 +60,23 @@ public class Image {
     }
 	
 	/**
-	 * Sauvegarde l'image au format binaire PPM (P3)
+	 * Sauvegarde l'image au format binaire PPM (P6)
 	 */
 	public void save_bin(String filename) throws IOException {
-		
-		FileOutputStream output = new FileOutputStream(filename);
-		String header = "P6\n" + width + " " + height + "\n255\n";
-		output.write(header.getBytes());
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
-				String pixel = pixels[y][x][0] + " " + pixels[y][x][1] + " " + pixels[y][x][2] + " ";
-				output.write(pixel.getBytes());
-			}
-			output.write("\n".getBytes);
-		}
-		output.close(); // Fermeture du fichier
+    FileOutputStream output = new FileOutputStream(filename);
 
-        System.out.println("Image PPM créée avec succès !");
-	}
+    String header = "P6\n" + width + " " + height + "\n255\n";
+    output.write(header.getBytes());
+
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            output.write(pixels[y][x][0]); 
+            output.write(pixels[y][x][1]); 
+            output.write(pixels[y][x][2]); 
+        }
+    }
+
+    output.close();
+    System.out.println("Image PPM P6 créée avec succès !");
+    }
 }
