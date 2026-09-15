@@ -57,4 +57,24 @@ public class Image {
             System.err.println("Erreur lors de l'écriture du fichier : " + e.getMessage());
         }
     }
+	
+	/**
+	 * Sauvegarde l'image au format binaire PPM (P3)
+	 */
+	public void save_bin(String filename) throws IOException {
+		
+		FileOutputStream output = new FileOutputStream(filename);
+		String header = "P6\n" + width + " " + height + "\n255\n";
+		output.write(header.getBytes());
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				String pixel = pixels[y][x][0] + " " + pixels[y][x][1] + " " + pixels[y][x][2] + " ";
+				output.write(pixel.getBytes());
+			}
+			output.write("\n".getBytes);
+		}
+		output.close(); // Fermeture du fichier
+
+        System.out.println("Image PPM créée avec succès !");
+	}
 }
