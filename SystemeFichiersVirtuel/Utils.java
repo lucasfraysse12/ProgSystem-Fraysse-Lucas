@@ -49,12 +49,15 @@ public class Utils {
                (memory[offset + 7] & 0xFF));
     }
 
-    public static int writeString(
-        byte[] memory,
-        int offset,
-        String str,
-        int maxLength) {
+    public static int writeString(byte[] memory, int offset, String str, int maxLength) {
 
+        byte[] strEnBytes = str.getBytes();
+        if (strEnBytes.length <= maxLength) {
+            for (int i = 0; i < strEnBytes.length; i++) {
+                memory[offset + i] = strEnBytes[i];
+            }
+            
+        }
         // TODO:
         // 1. Convertir la chaîne en octets.
         // 2. Copier les octets sans dépasser maxLength.
