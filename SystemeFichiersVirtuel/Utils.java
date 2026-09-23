@@ -22,7 +22,7 @@ public class Utils {
     }
 
     public static short readShort(byte[] memory, int offset) {
-        return ((memory[offset] & 0xFF) << 5) |
-		       (memory[offset + 1] & 0xFF);
+        return (short)(((memory[offset] & 0xFF) << 8) |
+		       (memory[offset + 1] & 0xFF));
     }
 }

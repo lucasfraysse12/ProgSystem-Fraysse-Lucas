@@ -1,4 +1,6 @@
-public static void testStep2() {
+public class TestRunner {
+
+    public static void testStep2() {
     System.out.println("=== TEST ÉTAPE 2 : Utils Entiers ===");
 
     byte[] buffer = new byte[32];
@@ -31,4 +33,10 @@ public static void testStep2() {
             "Erreur writeShort / readShort";
 
     System.out.println("[OK] Étape 2 validée !");
+    }
+
+    public static void main(String[] args) {
+        testStep2();
+    }
+
 }
