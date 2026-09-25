@@ -39,7 +39,6 @@ public class MemoryManager {
 
     private void writeSuperblock() {
 
-
         Utils.writeString(
                 memory,
                 SUPERBLOCK_OFFSET,
