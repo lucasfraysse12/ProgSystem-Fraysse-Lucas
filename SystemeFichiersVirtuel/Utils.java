@@ -56,12 +56,14 @@ public class Utils {
             for (int i = 0; i < strEnBytes.length; i++) {
                 memory[offset + i] = strEnBytes[i];
             }
-            
+            for (int i = strEnBytes.length; i < maxLength; i++) {
+                memory[offset + i] = 0;
+            }
+        } else {
+            for(int i = 0; i < maxLength; i++) {
+                memory[offset + i] = strEnBytes[i];
+            }
         }
-        // TODO:
-        // 1. Convertir la chaîne en octets.
-        // 2. Copier les octets sans dépasser maxLength.
-        // 3. Nettoyer le reste de la zone avec des zéros.
 
         return maxLength;
     }
