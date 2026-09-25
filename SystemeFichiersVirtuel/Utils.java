@@ -39,14 +39,14 @@ public class Utils {
     }
 
     public static long readLong(byte[] memory, int offset) {
-        return (long)(((memory[offset] & 0xFF) << 56) |
-               ((memory[offset + 1] & 0xFF) << 48) |
-               ((memory[offset + 2] & 0xFF) << 40) |
-               ((memory[offset + 3] & 0xFF) << 32) |
-               ((memory[offset + 4] & 0xFF) << 24) |
-               ((memory[offset + 5] & 0xFF) << 16) |
-               ((memory[offset + 6] & 0xFF) << 8) |
-               (memory[offset + 7] & 0xFF));
+        return (((long)memory[offset] & 0xFF) << 56) |
+               (((long)memory[offset + 1] & 0xFF) << 48) |
+               (((long)memory[offset + 2] & 0xFF) << 40) |
+               (((long)memory[offset + 3] & 0xFF) << 32) |
+               (((long)memory[offset + 4] & 0xFF) << 24) |
+               (((long)memory[offset + 5] & 0xFF) << 16) |
+               (((long)memory[offset + 6] & 0xFF) << 8) |
+               (((long)memory[offset + 7] & 0xFF));
     }
 
     public static int writeString(byte[] memory, int offset, String str, int maxLength) {
@@ -64,19 +64,16 @@ public class Utils {
                 memory[offset + i] = strEnBytes[i];
             }
         }
-
         return maxLength;
     }
 
-    public static String readString(
-        byte[] memory,
-        int offset,
-        int maxLength) {
+    public static String readString(byte[] memory, int offset, int maxLength) {
 
-        // TODO:
-        // Lire jusqu'au premier octet nul
-        // ou jusqu'à maxLength.
+        int length = 0;
+        while (length < maxLength && memory[offset + length] != 0) {
+            length++;
+        }
 
-        return "";
+        return new String(memory, offset, length);
     }
 }
