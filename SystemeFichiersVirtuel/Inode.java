@@ -64,15 +64,5 @@ public class Inode {
 		Utils.writeInt(memory, 68, indirectPointer);
 		Utils.writeShort(memory, 72, permissions);
 		Utils.writeInt(memory, 74, linkCount);
-		// TODO:
-		// 1. Numéro d'inode
-		// 2. Type
-		// 3. Taille
-		// 4. Création
-		// 5. Modification
-		// 6. 10 pointeurs directs
-		// 7. Pointeur indirect
-		// 8. Permissions
-		// 9. Nombre de liens
 	}
 }
