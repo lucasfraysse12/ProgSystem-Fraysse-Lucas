@@ -32,7 +32,7 @@ public class Inode {
         int[] pointers = new int[DIRECT_POINTERS];
 
 		for (int i = 0; i < 10; i++) {
-			pointers[i] = Utils.readInt(memory, getInodeOffset() + 28 + i * 8);
+			pointers[i] = Utils.readInt(memory, getInodeOffset() + 28 + i * 4);
 		}
 		
         return pointers;

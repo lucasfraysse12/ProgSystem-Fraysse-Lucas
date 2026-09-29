@@ -299,8 +299,8 @@ public class TestRunner {
         //testStep3();
         //testStep4();
         //testStep5();
-		//testStep6();
-		testStep7();
+		testStep6();
+		//testStep7();
     }
 
 }
