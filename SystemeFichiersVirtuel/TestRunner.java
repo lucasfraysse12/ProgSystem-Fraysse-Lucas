@@ -415,6 +415,32 @@ public class TestRunner {
                 System.out.println("refus depassement : " + vfs.writeFile(2, tropGros));
         }
 
+        public static void testStep10() {
+                System.out.println("TEST ETAPE 10");
+
+                VirtualFileSystem vfs = new VirtualFileSystem();
+                MemoryManager mm = vfs.getMemoryManager();
+
+                vfs.createFile("/", "a_supprimer.txt");
+                byte[] data = new byte[513];
+                vfs.writeFile(0, data);
+
+                assert mm.isBlockUsed(129) == 1 : "Le bloc 129 devrait être occupé";
+                assert mm.isBlockUsed(130) == 1 : "Le bloc 130 devrait être occupé";
+
+                boolean deleted = vfs.deleteFile(0);
+                assert deleted : "La suppression a échoué";
+
+                assert mm.isBlockUsed(129) == 0 : "Le bloc 129 n'a pas été libéré";
+                assert mm.isBlockUsed(130) == 0 : "Le bloc 130 n'a pas été libéré";
+
+                Inode inode = new Inode(mm, 0);
+                assert inode.getFileType() == 0 : "Le type de l'inode n'a pas été remis à 0";
+                assert inode.getFileSize() == 0 : "La taille de l'inode n'a pas été réinitialisée";
+
+                System.out.println("[OK] Étape 10 validée !");
+        }
+
 
     public static void main(String[] args) {
         //testStep2();
@@ -425,7 +451,8 @@ public class TestRunner {
 	//testStep7();
         //testStep8();
         //testStep9();
-        testStep9EnPlus();
+        //testStep9EnPlus();
+        testStep10();
     }
 
 }

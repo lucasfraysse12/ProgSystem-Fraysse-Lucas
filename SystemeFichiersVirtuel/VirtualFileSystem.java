@@ -136,4 +136,26 @@ public class VirtualFileSystem {
         return fileData;
     }
 
+    public boolean deleteFile(int inodeNum) {
+
+        Inode in = new Inode(memoryManager, inodeNum);
+        int fileSize = in.getFileSize();
+
+        int blocksNeeded = (fileSize + MemoryManager.BLOCK_SIZE - 1) / MemoryManager.BLOCK_SIZE;
+        int[] blockPointers = in.getDirectPointers();
+
+        for (int i = 0; i < blocksNeeded; i++) {
+            int blockNum = blockPointers[i];
+            if (blockNum != 0) {
+                memoryManager.setBlockUsed(blockNum, false);
+            }
+        }
+
+        in.writeToMemory(0, 0, 0L, 0L, new int[Inode.DIRECT_POINTERS], 0, (short) 0, 0);
+
+        return true;
+
+    }
+
+
 }
