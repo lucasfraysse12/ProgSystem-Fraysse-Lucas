@@ -99,7 +99,7 @@ public class MemoryManager {
         int bitPosition = blockNumber % 8;
         int offset = BITMAP_OFFSET + byteIndex;
 
-        if ((memory[offset] & (1 << (7 - bitPosition))) != 1) {
+        if ((memory[offset] & (1 << (7 - bitPosition))) != 0) {
             return 1;
         } else {
             return 0;

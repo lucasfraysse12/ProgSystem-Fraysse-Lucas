@@ -53,16 +53,16 @@ public class Inode {
 
 		int offset = getInodeOffset();
 
-		Utils.writeInt(memory, 0, inodeNumber);
-		Utils.writeInt(memory, 4, fileType);
-		Utils.writeInt(memory, 8, fileSize);
-		Utils.writeLong(memory, 12, creationTime);
-		Utils.writeLong(memory, 20, modificationTime);
+		Utils.writeInt(memory, offset, inodeNumber);
+		Utils.writeInt(memory, offset + 4, fileType);
+		Utils.writeInt(memory, offset + 8, fileSize);
+		Utils.writeLong(memory, offset + 12, creationTime);
+		Utils.writeLong(memory, offset + 20, modificationTime);
 		for (int i = 0; i < 10; i++) {
-			Utils.writeInt(memory, 28 + i * 4, directPointers[i]);
+			Utils.writeInt(memory, offset + 28 + i * 4, directPointers[i]);
 		}
-		Utils.writeInt(memory, 68, indirectPointer);
-		Utils.writeShort(memory, 72, permissions);
-		Utils.writeInt(memory, 74, linkCount);
+		Utils.writeInt(memory, offset + 68, indirectPointer);
+		Utils.writeShort(memory, offset + 72, permissions);
+		Utils.writeInt(memory, offset + 74, linkCount);
 	}
 }

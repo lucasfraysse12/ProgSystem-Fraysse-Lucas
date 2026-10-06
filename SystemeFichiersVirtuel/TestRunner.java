@@ -385,6 +385,36 @@ public class TestRunner {
                 System.out.println("[OK] Étape 9 validée !");
         }
 
+        public static void testStep9EnPlus() {
+                VirtualFileSystem vfs = new VirtualFileSystem();
+
+                // Test 1
+                vfs.createFile("/", "f512.txt");
+                byte[] d512 = new byte[512];
+                System.out.println("512 ok : " + vfs.writeFile(0, d512));
+                System.out.println("taille lue : " + vfs.readFile(0).length);
+
+                // Test 2
+                vfs.createFile("/", "f513.txt");
+                byte[] d513 = new byte[513];
+                d513[0] = 11;
+                d513[512] = 33; 
+                System.out.println("513 ok : " + vfs.writeFile(1, d513));
+
+                Inode in = new Inode(vfs.getMemoryManager(), 1);
+                int[] ptrs = in.getDirectPointers();
+                System.out.println("blocs : " + ptrs[0] + " et " + ptrs[1]);
+
+                byte[] mem = vfs.getMemoryManager().getFilesystemMemory();
+                System.out.println("debut bloc 1 : " + mem[ptrs[0] * 512]);
+                System.out.println("debut bloc 2 : " + mem[ptrs[1] * 512]);
+
+                // Test 3
+                vfs.createFile("/", "tropGros.txt");
+                byte[] tropGros = new byte[10000];
+                System.out.println("refus depassement : " + vfs.writeFile(2, tropGros));
+        }
+
 
     public static void main(String[] args) {
         //testStep2();
@@ -394,7 +424,8 @@ public class TestRunner {
 	//testStep6();
 	//testStep7();
         //testStep8();
-        testStep9();
+        //testStep9();
+        testStep9EnPlus();
     }
 
 }
