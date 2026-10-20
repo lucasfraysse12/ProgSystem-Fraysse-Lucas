@@ -1,28 +1,45 @@
 public class TestCompteur {
     public static void main(String[] args) {
         
-        CompteurDangereux[] threads = new CompteurDangereux[50*9];
+        
+        Thread[] threads = new Thread[9];
+        int[] resultats = new int[50];
+        int compteurCorrect = 0;
+        int minimum;
 
         for (int i = 0; i < 50; i++) {
             CompteurDangereux.resetCompteur();
-            threads[i] = new CompteurDangereux();
-            threads[i + 1] = new CompteurDangereux();
-            threads[i + 2] = new CompteurDangereux();
-            threads[i + 3] = new CompteurDangereux();
-            threads[i + 4] = new CompteurDangereux();
-            threads[i + 5] = new CompteurDangereux();
-            threads[i + 6] = new CompteurDangereux();
-            threads[i + 7] = new CompteurDangereux();
-            threads[i + 8] = new CompteurDangereux();
-            threads[i].start();
-            threads[i + 1].start();
-            threads[i + 2].start();
-            threads[i + 3].start();
-            threads[i + 4].start();
-            threads[i + 5].start();
-            threads[i + 6].start();
-            threads[i + 7].start();
-            threads[i + 8].start();
+            for (int j = 0; j < 9; j++) {
+                threads[j] = new Thread(new CompteurDangereux.Incrementeur("inc", 1111111));
+            }
+            for (int j = 0; j < 9; j++) {
+                threads[j].start();
+            }
+            for (int j = 0; j < 9; j++) {
+                try {
+                    threads[j].join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            resultats[i] = CompteurDangereux.getCompteur();
         }
+
+        minimum = resultats[0];
+        for (int res : resultats) {
+            if (res == 9 * 1111111) {
+                compteurCorrect++;
+            }
+            if (res < minimum) {
+                minimum = res;
+            }
+        }
+        
+        
+        System.out.println("Nombre bonnes réponses : " + compteurCorrect);
+        System.out.println("Pourcentage réussite : " + (float)(compteurCorrect)/50*100);
+        System.out.println("Minimum obtenu : " + minimum);
+
+
     }
 }
