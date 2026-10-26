@@ -10,11 +10,8 @@ public class ServeurMulti {
             Socket client = serverSocket.accept();
             System.out.println("Nouveau client : " + client.getInetAddress());
 
-            // Délégation à un thread dédié
             Thread t = new Thread(new ClientHandler(client));
             t.start();
-            t.join();
-            
         }
     }
 }
@@ -28,14 +25,25 @@ class ClientHandler implements Runnable {
 
     @Override
     public void run() {
-        
+        String threadName = Thread.currentThread().getName();
         try {
-            Thread.currentThread().getName();
-        } finally {
-            try { client.close(); } catch (IOException ignored) {}
-        }
-    
-        
+            BufferedReader in = new BufferedReader(
+                new InputStreamReader(client.getInputStream())
+            );
+            PrintWriter out = new PrintWriter(client.getOutputStream(), true);
 
+            String ligne;
+            while ((ligne = in.readLine()) != null) {
+                System.out.println("[" + threadName + "] Reçu : " + ligne);
+                out.println("ECHO: " + ligne);
+            }
+            System.out.println("[" + threadName + "] Client déconnecté");
+        } catch (IOException e) {
+            System.err.println("[" + threadName + "] Erreur : " + e.getMessage());
+        } finally {
+            try { 
+                client.close(); 
+            } catch (IOException ignored) {}
+        }
     }
 }
